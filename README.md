@@ -136,3 +136,11 @@ Simplified read building output:
   ]
 }
 ```
+
+# React Frontend
+The frontend portion of this project is located here: `/app/javascript/components`
+
+* Write an API call to fetch all building data and display each building in a card component written in React.
+* Create an interface using React components to create a new building and edit an existing building, complete with the necessary API calls.
+* Proper functionality should be the main focus here. Any styling choices are bonus points but it should be readable so add margin and padding for spacing as needed.
+* This should demonstrate a competent use of React hooks to manage state.
