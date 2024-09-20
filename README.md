@@ -27,8 +27,8 @@ rails new engineering_take_home -d postgresql  -j=esbuild -T
 Once you've downloaded the project the easiest way to run it is with Docker. After installing docker locally:
 
 ```
-docker-compose build
-docker-compose up
+docker compose build
+docker compose up
 ```
 
 If everything works correctly, then you should be able to hit http://localhost:3000/ and see a welcome page with a simple React component.
