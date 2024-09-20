@@ -24,23 +24,16 @@ This repository was setup using the latest Ruby on Rails via:
 rails new engineering_take_home -d postgresql  -j=esbuild -T
 ```
 
-Once you've downloaded the project run, setup the database, verify that console and the server run:
+Once you've downloaded the project the easiest way to run it is with Docker. After installing docker locally:
 
 ```
-bundle exec rails db:create
-bundle exec rails c
-bundle exec rails s
-```
-
-Also verify that the React, JS environment works.
-
-```
-yarn build
+docker-compose build
+docker-compose up
 ```
 
 If everything works correctly, then you should be able to hit http://localhost:3000/ and see a welcome page with a simple React component.
 
-# The Ask 
+# The Ask
 
 Create a Rails app with the following components:
 * SQL database
@@ -49,11 +42,11 @@ Create a Rails app with the following components:
 
 # Background
 
-We are building a platform that stores a list of physical buildings. Stakeholders will interact with our application via API.  We will have two types of stakeholders: 
+We are building a platform that stores a list of physical buildings. Stakeholders will interact with our application via API.  We will have two types of stakeholders:
 * Clients that submit and create / edit buildings that they own
 * External clients that read all buildings from an API
 
-Additionally, we want to allow functionality that allows clients to have custom fields to their buildings. For example, some clients may want their buildings to have an attribute that designates if a building used to be a church. 
+Additionally, we want to allow functionality that allows clients to have custom fields to their buildings. For example, some clients may want their buildings to have an attribute that designates if a building used to be a church.
 
 We do not want clients to modify this custom field configuration; it should be left purely within the database.
 
@@ -68,7 +61,7 @@ Your database schema should support the following main objects at a minimum:
 
 ## Buildings
 
-* Buildings are used to represent physical buildings 
+* Buildings are used to represent physical buildings
 * Has basic address info: Address / State / Zip etc
 * Additional information provided by Custom Fields
 * Associated with Client
