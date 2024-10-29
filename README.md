@@ -33,6 +33,12 @@ docker compose up
 
 If everything works correctly, then you should be able to hit http://localhost:3000/ and see a welcome page with a simple React component.
 
+If you want to run specs, you can run Rspec with from within the Docker container:
+
+```
+RAILS_ENV=test bundle exec rspec
+```
+
 # The Ask
 
 Create a Rails app with the following components:
