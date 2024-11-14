@@ -71,6 +71,9 @@ GEM
       minitest (>= 5.1)
       securerandom (>= 0.3)
       tzinfo (~> 2.0, >= 2.0.5)
+    annotate (3.2.0)
+      activerecord (>= 3.2, < 8.0)
+      rake (>= 10.4, < 14.0)
     ast (2.4.2)
     base64 (0.2.0)
     bigdecimal (3.1.8)
@@ -88,6 +91,7 @@ GEM
       irb (~> 1.10)
       reline (>= 0.3.8)
     diff-lcs (1.5.1)
+    dotenv (3.1.4)
     drb (2.2.1)
     error_highlight (0.6.0)
     erubi (1.13.0)
@@ -277,9 +281,11 @@ PLATFORMS
   x86_64-linux
 
 DEPENDENCIES
+  annotate
   bootsnap
   brakeman
   debug
+  dotenv
   error_highlight (>= 0.4.0)
   factory_bot_rails
   faker
