@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.2].define(version: 2024_11_14_214419) do
+ActiveRecord::Schema[7.2].define(version: 2024_11_15_045548) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -21,25 +21,25 @@ ActiveRecord::Schema[7.2].define(version: 2024_11_14_214419) do
     t.string "zip", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.bigint "custom_field_id", null: false
-    t.index ["custom_field_id"], name: "index_buildings_on_custom_field_id"
+    t.bigint "client_id", null: false
+    t.string "city", null: false
+    t.index ["client_id"], name: "index_buildings_on_client_id"
   end
 
   create_table "clients", force: :cascade do |t|
     t.string "name", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.bigint "building_id", null: false
-    t.index ["building_id"], name: "index_clients_on_building_id"
   end
 
   create_table "custom_fields", force: :cascade do |t|
-    t.string "name", null: false
-    t.jsonb "value", default: {}, null: false
+    t.jsonb "data", default: {}, null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.bigint "building_id", null: false
+    t.index ["building_id"], name: "index_custom_fields_on_building_id"
   end
 
-  add_foreign_key "buildings", "custom_fields"
-  add_foreign_key "clients", "buildings"
+  add_foreign_key "buildings", "clients"
+  add_foreign_key "custom_fields", "buildings"
 end
