@@ -19,12 +19,12 @@ class Building < ApplicationRecord
         "MA", "MI", "MN", "MS", "MO", "MT", "NE", "NV", "NH", "NJ",
         "NM", "NY", "NC", "ND", "OH", "OK", "OR", "PA", "RI", "SC",
         "SD", "TN", "TX", "UT", "VT", "VA", "WA", "WV", "WI", "WY"
-    ]
+    ].freeze
 
-    NUMS ||= [ "0", "1", "2", "3", "4", "5", "6", "7", "8", "9" ]
+    NUMS ||= [ "0", "1", "2", "3", "4", "5", "6", "7", "8", "9" ].freeze
 
     belongs_to :client
-    has_many :custom_fields
+    has_many :custom_fields, dependent: :destroy
 
     validates :address_line_1, :state, :city, :zip, presence: true
     validates :state, inclusion: { in: STATES, message: "%{value} is not a US state" }

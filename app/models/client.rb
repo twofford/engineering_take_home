@@ -8,7 +8,7 @@
 #  updated_at :datetime         not null
 #
 class Client < ApplicationRecord
-    has_many :buildings
+    has_many :buildings, dependent: :destroy
 
     validates :name, presence: true
 end
