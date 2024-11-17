@@ -47,4 +47,40 @@ describe BuildingsController, type: :request do
             expect(body.first["address_line_2"]).to eq("Apt 2")
         end
     end
+
+    describe "#create" do
+        it "creates new buildings" do
+            client = create(:client)
+            params = { address_line_1: "1337 Foo Lane", city: "New York", state: "NY", zip: "10012", client_id: client.id }
+            post buildings_path, params: params
+            body = JSON.parse(response.body)
+            expect(response.status).to eq(200)
+            expect(body["address_line_1"]).to eq("1337 Foo Lane")
+        end
+
+        it "returns a 422 error if passed bad params" do
+            post buildings_path, params: {}
+            expect(response.status).to eq(422)
+            expect(Building.count).to eq(0)
+        end
+    end
+
+    describe "#update" do
+        it "updates an existing building" do
+            building = create(:building)
+            params = { address_line_1: "1337 Foo Lane" }
+            patch building_path(building.id), params: params
+            body = JSON.parse(response.body)
+            expect(response.status).to eq(200)
+            expect(body["address_line_1"]).to eq("1337 Foo Lane")
+        end
+
+        it "return a 404 error if the building doesn't exist" do
+            params = { address_line_1: "1337 Foo Lane" }
+            patch building_path(123), params: params
+            body = JSON.parse(response.body)
+            expect(response.status).to eq(404)
+            expect(body["error"]).to eq("Building not found")
+        end
+    end
 end

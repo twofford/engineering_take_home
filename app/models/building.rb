@@ -31,7 +31,7 @@ class Building < ApplicationRecord
     validate :valid_zip
 
     def valid_zip
-        errors.add("Zip must be 5 digits or 9 digits") unless [ 5, 9 ].include?(zip.length)
-        errors.add("Zip must contain only numbers") unless zip.chars.all? { |char| NUMS.include?(char) }
+        errors.add(:zip, message: "must be 5 digits or 9 digits") unless [ 5, 9 ].include?(zip&.length)
+        errors.add(:zip, message: "must contain only numbers") unless zip&.chars&.all? { |char| NUMS.include?(char) }
     end
 end
