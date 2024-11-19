@@ -129,7 +129,7 @@ describe BuildingsController, type: :request do
     end
 
   describe "#update" do
-    it "updates and returns existing buildings" do # failing
+    it "updates and returns existing buildings" do
         building = create(:building, address_line_1: "444 Bar Place")
         params = { building: { address_line_1: "1337 Foo Lane" } }
         patch building_path(building.id), params: params
@@ -147,7 +147,7 @@ describe BuildingsController, type: :request do
         expect(body["error"]).to eq("Building 123 not found")
     end
 
-    it "updates and returns associated custom fields" do # failing
+    it "updates and returns associated custom fields" do
         building = create(:building)
         custom_field = create(:custom_field, building: building, data: { bedroom_color: "white" })
         params = { building: { custom_fields: { custom_field.id => { bedroom_color: "blue" } } } }
