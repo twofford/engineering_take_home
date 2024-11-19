@@ -31,7 +31,66 @@ class Building < ApplicationRecord
     validate :valid_zip
 
     def valid_zip
-        errors.add(:zip, message: "must be 5 digits or 9 digits") unless [ 5, 9 ].include?(zip&.length)
-        errors.add(:zip, message: "must contain only numbers") unless zip&.chars&.all? { |char| NUMS.include?(char) }
+        errors.add(:base, message: "Error creating Building. Zip must be 5 digits or 9 digits") unless [ 5, 9 ].include?(zip&.length)
+        errors.add(:base, message: "Error creating Building. Zip must contain only numbers") unless zip&.chars&.all? { |char| NUMS.include?(char) }
+    end
+
+    def self.create_with_custom_fields(params)
+        begin
+            ActiveRecord::Base.transaction do
+                @building = Building.create(
+                    params.require(:building)
+                        .permit(
+                            :address_line_1,
+                            :address_line_2,
+                            :city,
+                            :state,
+                            :zip,
+                            :client_id
+                        )
+                )
+                cf_params = params.dig(:building, :custom_fields)
+                unless cf_params.nil?
+                    cf_params.to_unsafe_hash.each do |k, v|
+                        h = Hash.new
+                        h[k] = v
+                      CustomField.new(data: h, building: @building).save!
+                    end
+                end
+                @building
+            end
+        rescue StandardError => e
+            @building = Building.new unless @building
+            @building.errors.add(:base, e)
+            @building
+        end
+    end
+
+    def update_with_custom_fields(params)
+        begin
+            ActiveRecord::Base.transaction do
+                update(
+                    params.require(:building)
+                        .permit(
+                            :address_line_1,
+                            :address_line_2,
+                            :city,
+                            :state,
+                            :zip,
+                            :client_id
+                        )
+                )
+                cf_params = params.dig(:building, :custom_fields)
+                unless cf_params.nil?
+                    cf_params.to_unsafe_hash.each do |k, v|
+                        CustomField.find(k)&.update(data: v)
+                    end
+                end
+                self
+            end
+        rescue StandardError => e
+            self.errors.add(:base, e)
+            self
+        end
     end
 end
