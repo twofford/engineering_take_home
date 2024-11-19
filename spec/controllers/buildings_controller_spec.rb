@@ -49,13 +49,14 @@ describe BuildingsController, type: :request do
             body = JSON.parse(response.body)
             expect(response.status).to eq(200)
             expect(body["address_line_1"]).to eq("1337 Foo Lane")
+            expect(body["client"]["name"]).to eq("Perchwell")
         end
 
         it "returns a 422 error if passed no params" do
             expect { post buildings_path }.to not_change(Building, :count).and not_change(CustomField, :count)
             body = JSON.parse(response.body)
             expect(response.status).to eq(422)
-            expect(body["errors"].first).to eq("param is missing or the value is empty: building")
+            expect(body["errors"]).to include("param is missing or the value is empty: building")
         end
 
         it "creates and returns associated custom fields" do
