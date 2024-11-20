@@ -152,7 +152,7 @@ describe BuildingsController, type: :request do
     it "updates and returns associated custom fields" do
         building = create(:building)
         custom_field = create(:custom_field, building: building, data: { bedroom_color: "white" })
-        params = { building: { custom_fields: { custom_field.id => { bedroom_color: "blue" } } } }
+        params = { building: { custom_fields: [ { id: custom_field.id, data: { bedroom_color: "blue" } } ] } }
         patch building_path(building.id), params: params
         body = JSON.parse(response.body)
         expect(response.status).to eq(200)
@@ -161,7 +161,7 @@ describe BuildingsController, type: :request do
     end
 
     it "returns a 422 error if an associated custom field doesn't exist" do
-      params = { building: { custom_fields: { 123 => { bedroom_color: "blue" } } } }
+      params = { building: { custom_fields: [ { id: 123, data: { bedroom_color: "white" } } ] } }
       patch building_path(create(:building).id), params: params
       body = JSON.parse(response.body)
       expect(response.status).to eq(422)

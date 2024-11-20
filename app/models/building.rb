@@ -72,6 +72,7 @@ class Building < ApplicationRecord
                 update(
                     params.require(:building)
                         .permit(
+                            :id,
                             :address_line_1,
                             :address_line_2,
                             :city,
@@ -82,8 +83,8 @@ class Building < ApplicationRecord
                 )
                 cf_params = params.dig(:building, :custom_fields)
                 unless cf_params.nil?
-                    cf_params.to_unsafe_hash.each do |k, v|
-                        CustomField.find(k)&.update(data: v)
+                    cf_params.each do |hash|
+                        CustomField.find(hash[:id])&.update(data: hash[:data])
                     end
                 end
                 self

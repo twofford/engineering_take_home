@@ -13,16 +13,14 @@ const App = () => {
   };
 
   if (isLoading) {
-    return (
-      <Container>
-        <Spinner />
-      </Container>
-    );
+    return <Spinner />;
   } else {
     return (
       <Container>
+        <h1 style={{display: "flex", justifyContent: "center"}}>Buildings</h1>
         <Buildings isLoading={isLoading} buildings={buildings} error={error} />
         <Pagination
+          sx={{ display: "flex", justifyContent: "center" }}
           count={meta["total"] / 5}
           page={page}
           onChange={handleOnChange}

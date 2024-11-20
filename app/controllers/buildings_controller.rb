@@ -8,6 +8,7 @@ class BuildingsController < ApplicationController
             .includes(:custom_fields)
             .limit(DEFAULT_LIMIT)
             .offset((params[:page].to_i.clamp(1, Float::INFINITY) - 1) * DEFAULT_LIMIT)
+            .order(created_at: :asc)
         render json: BuildingBlueprint.render(@buildings, root: :buildings, meta: { total: Building.count })
     end
 
@@ -23,7 +24,6 @@ class BuildingsController < ApplicationController
     def update
         @building = Building.where(id: params[:id]).first
         return render json: { error: "Building #{params[:id]} not found" }, status: :not_found if @building.nil?
-
         @building.update_with_custom_fields(params)
         unless @building.errors.any?
             render json: BuildingBlueprint.render(@building)
