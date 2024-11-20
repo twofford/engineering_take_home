@@ -7,7 +7,8 @@ describe BuildingsController, type: :request do
             get buildings_path
             body = JSON.parse(response.body)
             expect(response.status).to eq(200)
-            expect(body.count).to eq(5)
+            expect(body["buildings"].count).to eq(5)
+            expect(body["meta"]["total"]).to eq(5)
         end
 
         it "paginates the results when passed a `page` param" do
@@ -16,8 +17,8 @@ describe BuildingsController, type: :request do
           params = { page: 2 }
           get buildings_path, params: params
           body = JSON.parse(response.body)
-          expect(body.count).to eq(1)
-          expect(body.first["address_line_1"]).to eq("1337 Foo Lane")
+          expect(body["buildings"].count).to eq(1)
+          expect(body["buildings"].first["address_line_1"]).to eq("1337 Foo Lane")
         end
 
         it "returns the first 5 results when not passed a `page` param" do
@@ -25,8 +26,8 @@ describe BuildingsController, type: :request do
             create(:building, address_line_1: "1337 Foo Lane")
             get buildings_path
             body = JSON.parse(response.body)
-            expect(body.count).to eq(5)
-            expect(body.first["address_line_1"]).to eq("379 W Broadway")
+            expect(body["buildings"].count).to eq(5)
+            expect(body["buildings"].first["address_line_1"]).to eq("379 W Broadway")
         end
 
         it "returns associated custom fields" do
@@ -36,9 +37,9 @@ describe BuildingsController, type: :request do
             get buildings_path
             body = JSON.parse(response.body)
             expect(response.status).to eq(200)
-            expect(body.first["custom_fields"].count).to eq(2)
-            expect(body.first["custom_fields"].first.dig("data", "bedroom_color")).to eq("white")
-            expect(body.first["custom_fields"].second.dig("data", "number_of_bathrooms")).to eq(3)
+            expect(body["buildings"].first["custom_fields"].count).to eq(2)
+            expect(body["buildings"].first["custom_fields"].first.dig("data", "bedroom_color")).to eq("white")
+            expect(body["buildings"].first["custom_fields"].second.dig("data", "number_of_bathrooms")).to eq(3)
         end
     end
 

@@ -8,7 +8,7 @@ class BuildingsController < ApplicationController
             .includes(:custom_fields)
             .limit(DEFAULT_LIMIT)
             .offset((params[:page].to_i.clamp(1, Float::INFINITY) - 1) * DEFAULT_LIMIT)
-        render json: BuildingBlueprint.render(@buildings)
+        render json: BuildingBlueprint.render(@buildings, root: :buildings, meta: { total: Building.count })
     end
 
     def create

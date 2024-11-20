@@ -1,11 +1,15 @@
-// Entry point for the build script in your package.json
-import React from 'react';
-import ReactDOM from 'react-dom';
-import HelloWorld from './components/HelloWorld';
+import React, { StrictMode } from "react";
+import { createRoot } from "react-dom/client";
+import Root from "./components/Root";
 
-document.addEventListener('DOMContentLoaded', () => {
-  const node = document.getElementById('react-root');
+document.addEventListener("DOMContentLoaded", () => {
+  const node = document.getElementById("react-root");
   if (node) {
-    ReactDOM.render(<HelloWorld />, node);
+    const root = createRoot(node);
+    root.render(
+      <StrictMode>
+        <Root />
+      </StrictMode>
+    );
   }
 });
