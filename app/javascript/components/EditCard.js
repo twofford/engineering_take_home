@@ -17,12 +17,12 @@ const EditCard = ({ building, toggleFunction, setUpdatedBuilding }) => {
   } = building;
 
   const [formData, setFormData] = useState({
-    addressLine1: address_line_1,
-    addressLine2: address_line_2,
+    address_line1: address_line_1,
+    address_line2: address_line_2,
     city: city,
     state: state,
     zip: zip,
-    customFields: custom_fields,
+    custom_fields: custom_fields,
   });
 
   const [isLoading, setIsLoading] = useState(false);
@@ -68,7 +68,7 @@ const EditCard = ({ building, toggleFunction, setUpdatedBuilding }) => {
             label="Address 1"
             variant="standard"
             defaultValue={address_line_1}
-            value={formData["addressLine1"]}
+            value={formData["address_line1"]}
             onChange={(e) => {
               setFormData((prevData) => ({
                 ...prevData,
@@ -83,7 +83,7 @@ const EditCard = ({ building, toggleFunction, setUpdatedBuilding }) => {
             label="Address 2"
             variant="standard"
             defaultValue={address_line_2}
-            value={formData["addressLine2"]}
+            value={formData["address_line2"]}
             onChange={(e) => {
               setFormData((prevData) => ({
                 ...prevData,
@@ -141,7 +141,15 @@ const EditCard = ({ building, toggleFunction, setUpdatedBuilding }) => {
           />
         </p>
         {custom_fields.map((el, i) => {
-          <CustomField key={i} el={el} />;
+          return (
+            <CustomField
+              key={i}
+              el={el}
+              idx={i}
+              isEditView={true}
+              setFormData={setFormData}
+            />
+          );
         })}
         <p>
           <Button variant="contained" onClick={() => handleOnClick()}>

@@ -36,11 +36,13 @@ const DisplayCard = ({ building, toggleFunction }) => {
         <p>
           <strong>Client:</strong> {name}
         </p>
-        {custom_fields.map((el, i) => {
-          <CustomField key={i} el={el} />;
-        })}
+        <p>
+          {custom_fields.map((el, i) => {
+            return <CustomField key={i} el={el} isEditView={false}/>;
+          })}
+        </p>
       </CardContent>
-      <CardActions style={{display: "flex", justifyContent: "center"}}>
+      <CardActions style={{ display: "flex", justifyContent: "center" }}>
         <Button variant="contained" onClick={() => handleOnClick()}>
           Edit
         </Button>
