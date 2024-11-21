@@ -15,12 +15,12 @@ Custom Fields were by far the most interesting and challenging part of this proj
     - Cons: Using one column to keep track of the type of another column violates the [third normal form](https://www.snowflake.com/trending/data-normalization-flexible-data-science/) of database normalization. As the app grows, keeping the data normalized is good pratice.
 3. A custom_fields table with a jsonb data column:
     - Pros: 1) Easily extensible. If we decide we want to start allowing booleans or hashes or anything else, it's no problem. It all gets stored as json regarldess. 2) Fast! Jsonb is binary, so it's very quick to translate into json. 3) Normalized! We can change the data in the data column without having to change any other columns.
-    - Cons: Trickiest to implement on the frontend. We have to do a lot of playing around with JS objects before we pass them to Rails.
+    - Cons: 1) Requires custom validation on the backend. 2)Trickiest to implement on the frontend. We have to do a lot of playing around with JS objects before we pass them to Rails.
 4. (Secret 4th Option) MongoDB and GraphQL: Since the data is inherently not in a normalized format, it makes sense to use something other than a relational database to store it. I think a key/value store like Mongo makes sense. We would then use GraphQL to make two trips: one to Postgres to grab Clients and Buildings, and one to Mongo to grab CustomFields. The assignment said I had to use Postgres, though, so that's what I did.
     - Pros: Gets around having to put un-normalized data into a relational database altogether.
     - Cons: More complicated, requires two DB roundtrips to get everything and package it up.
 
-I ended up choosing option 3. It creates the least database bloat given the constraints of the assignment, and the extra work on the frontend is worth it if it makes the app easier to scale.
+I ended up choosing option 3. It creates the least database bloat given the constraints of the assignment, and the extra work on validations and on the frontend is worth it if it makes the app easier to scale.
 
 I used two gems: [dotenv](https://github.com/bkeepers/dotenv) to manage environment variables and [blueprinter](https://github.com/procore-oss/blueprinter) for JSON serialization. It's my fav JSON serialization library, the declarative syntax is *chef's kiss*.
 
