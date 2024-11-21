@@ -1,5 +1,8 @@
 # Hello!
 
+![the finished porduct](https://github.com/user-attachments/assets/0759a09f-4a83-4c43-b830-860f9251868d)
+
+
 Thanks for letting me complete this challenge. It was a lot of fun! While I can't guarantee it's bug-free, it's pretty robust, imho. What follows are a few thoughts about why I did things the way I did.
 
 Custom Fields were by far the most interesting and challenging part of this project. I considered a few approaches before choosing one (which I'll explain below). Here are the pros and cons of each approach and why I eventually chose the one I did:
