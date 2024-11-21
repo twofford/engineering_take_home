@@ -17,7 +17,7 @@ Custom Fields were by far the most interesting and challenging part of this proj
     - Pros: Gets around having to put un-normalized data into a relational database altogether.
     - Cons: More complicated, requires two DB roundtrips to get everything and package it up.
 
-I ended up choosing option 3. It creates the least database bloat given the constraints of the assignment.
+I ended up choosing option 3. It creates the least database bloat given the constraints of the assignment, and the extra work on the frontend is worth it if it makes the app easier to scale.
 
 I used two gems: [dotenv](https://github.com/bkeepers/dotenv) to manage environment variables and [blueprinter](https://github.com/procore-oss/blueprinter) for JSON serialization. It's my fav JSON serialization library, the declarative syntax is *chef's kiss*.
 
