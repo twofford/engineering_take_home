@@ -9,7 +9,7 @@ Custom Fields were by far the most interesting and challenging part of this proj
     - Cons: Lots of useless fields. Given that each row would have only one of the three columns populated, the database would fill up with nulls, which take up space even though we aren't using them.
 2. A custom_fields table with a field_type column:
     - Pros: Even easier validation, since we can validate on field_type and field_value together. If they don't match, it's not valid.
-    - Cons: Using one column to keep track of the type of another column violates [third normal form](https://www.snowflake.com/trending/data-normalization-flexible-data-science/) of database normalization. As the app grows, keeping the data normalized is good pratice.
+    - Cons: Using one column to keep track of the type of another column violates the [third normal form](https://www.snowflake.com/trending/data-normalization-flexible-data-science/) of database normalization. As the app grows, keeping the data normalized is good pratice.
 3. A custom_fields table with a jsonb data column:
     - Pros: 1) Easily extensible. If we decide we want to start allowing booleans or hashes or anything else, it's no problem. It all gets stored as json regarldess. 2) Fast! Jsonb is binary, so it's very quick to translate into json. 3) Normalized! We can change the data in the data column without having to change any other columns.
     - Cons: Trickiest to implement on the frontend. We have to do a lot of playing around with JS objects before we pass them to Rails.
