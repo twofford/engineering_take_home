@@ -1,8 +1,9 @@
 import React, { useState } from "react";
-import { Container, Pagination } from "@mui/material";
+import { Container, Pagination, Box } from "@mui/material";
 import useGetBuildings from "../hooks/useGetBuildings";
 import Buildings from "./Buildings";
 import Spinner from "./Spinner";
+import CreateBuildingForm from "./CreateBuildingForm";
 
 const App = () => {
   const [page, setPage] = useState(1);
@@ -21,10 +22,11 @@ const App = () => {
         <Buildings isLoading={isLoading} buildings={buildings} error={error} />
         <Pagination
           sx={{ display: "flex", justifyContent: "center" }}
-          count={meta["total"] / 5}
+          count={Math.ceil(meta["total"] / 5)}
           page={page}
           onChange={handleOnChange}
         />
+        <CreateBuildingForm />
       </Container>
     );
   }

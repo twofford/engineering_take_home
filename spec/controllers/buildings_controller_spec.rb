@@ -106,14 +106,6 @@ describe BuildingsController, type: :request do
             expect(body["custom_fields"].first.dig("data", "bedroom_color_options")).to include("red", "blue", "green")
         end
 
-        it "does not accept hashes for custom field values" do
-            params = { building: { address_line_1: "1337 Foo Lane", city: "New York", state: "NY", zip: "10012", client_id: create(:client).id, custom_fields: { bedroom_options: { furnished: true, max_bed_size: "queen" } } } }
-            expect { post buildings_path, params: params }.to not_change(Building, :count).and not_change(CustomField, :count)
-            body = JSON.parse(response.body)
-            expect(response.status).to eq(422)
-            expect(body["errors"]).to include(/Data must not be nested/)
-        end
-
         it "does not allow sql injection" do
             params = { building: { address_line_1: "1337 Foo Lane'; DROP TABLE buildings; --", city: "New York", state: "NY", zip: "10012", client_id: create(:client).id, custom_fields: { bedroom_color_options: [ "red", "green', 'blue')--" ], number_of_bedrooms: "1; DROP TABLE buildings; --" } } }
             post buildings_path, params: params

@@ -51,10 +51,14 @@ class Building < ApplicationRecord
                 )
                 cf_params = params.dig(:building, :custom_fields)
                 unless cf_params.nil?
-                    cf_params.to_unsafe_hash.each do |k, v|
-                        h = Hash.new
-                        h[k] = v
-                      CustomField.new(data: h, building: @building).save!
+                    if cf_params.keys.count > 1
+                        cf_params.each_pair do |k, v|
+                            hash = Hash.new
+                            hash[k] = v
+                            CustomField.new(data: hash, building_id: @building.id).save!
+                        end
+                    else
+                        CustomField.new(data: cf_params, building_id: @building.id).save!
                     end
                 end
                 @building
@@ -83,8 +87,8 @@ class Building < ApplicationRecord
                 )
                 cf_params = params.dig(:building, :custom_fields)
                 unless cf_params.nil?
-                    cf_params.each do |hash|
-                        CustomField.find(hash[:id])&.update(data: hash[:data])
+                    cf_params.each do |param|
+                        CustomField.find(param[:id])&.update(data: param[:data])
                     end
                 end
                 self

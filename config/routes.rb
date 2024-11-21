@@ -14,4 +14,5 @@ Rails.application.routes.draw do
   root "welcome#index"
 
   resources :buildings, only: [ :index, :create, :update ]
+  resources :clients, only: [ :index ]
 end
